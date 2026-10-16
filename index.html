@@ -16,8 +16,8 @@
 <label class="field">上班有效刷卡最晚時間<input id="start" type="time"></label>
 <label class="field">下班有效刷卡最早時間<input id="end" type="time"></label>
 <label class="field">預計下班時間<input id="leave" type="time"></label>
-<label class="field">提前提醒（分鐘）<input id="advance" type="number" min="0" max="180"></label>
-<label class="field wide">上班提醒時間（逗號分隔）<input id="workReminders" type="text" placeholder="06:30, 07:00"></label></div><p class="hint">有效刷卡門檻與預計下班時間是不同設定。切換星期時會保留目前修改，最後仍需按下「儲存設定」。</p></section>
+<label class="field">下班後延遲提醒（分鐘）<input id="advance" type="number" min="0" max="180"></label>
+<label class="field wide">上班提醒時間（逗號分隔）<input id="workReminders" type="text" placeholder="06:30, 07:00"></label></div><p class="hint">下班提醒會在預計下班時間加上延遲分鐘數後，查詢是否已完成下班刷卡。有效刷卡門檻與預計下班時間是不同設定。切換星期時會保留目前修改，最後仍需按下「儲存設定」。</p></section>
 <section class="card"><h2>特殊日期</h2><div class="grid">
 <label class="field">指定日期<input id="specialDate" type="date"></label>
 <label class="field">類型<select id="specialMode"><option value="off">休假／請假</option><option value="work">補班／加班／調整時間</option></select></label></div>
@@ -25,11 +25,11 @@
 <label class="field">上班有效刷卡最晚時間<input id="sStart" type="time"></label>
 <label class="field">下班有效刷卡最早時間<input id="sEnd" type="time"></label>
 <label class="field">預計下班時間<input id="sLeave" type="time"></label>
-<label class="field">提前提醒（分鐘）<input id="sAdvance" type="number" min="0" max="180"></label>
+<label class="field">下班後延遲提醒（分鐘）<input id="sAdvance" type="number" min="0" max="180"></label>
 <label class="field wide">上班提醒時間（逗號分隔）<input id="sReminders" type="text"></label></div>
 <div style="margin-top:15px"><label class="field">備註<input id="specialNote" maxlength="120" type="text" placeholder="例如：臨時提早下班"></label></div>
 <div class="buttons" style="margin-top:16px"><button class="btn" id="today">選今天</button><button class="btn primary" id="addSpecial">加入／更新特殊日期</button></div>
-<p class="hint">特殊日期優先於每週時間表，不會永久改變原本的星期設定。</p><div id="specialList"></div></section>
+<p class="hint">特殊日期優先於每週時間表，不會永久改變原本的星期設定。特殊日期的延遲提醒同樣從預計下班時間往後計算。</p><div id="specialList"></div></section>
 <section class="card"><h2>儲存與備份</h2><div class="footer-actions"><button class="btn primary" id="save">儲存設定</button><button class="btn" id="syncPhone">複製設定到 iPhone</button><button class="btn" id="export">匯出備份</button><button class="btn" id="import">匯入備份</button><input id="importFile" class="hidden" type="file" accept=".json,application/json"></div><div id="status" class="status" role="status" aria-live="polite"></div><p class="hint">本機儲存僅適用目前的瀏覽器及裝置。複製設定僅放入剪貼簿，不會自動傳送到 Scriptable；手機端匯入功能完成後才能使用。清除網站資料可能導致設定消失。備份檔不包含學校帳號或密碼。</p></section>
 </main>
 <script>

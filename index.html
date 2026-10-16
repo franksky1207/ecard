@@ -10,7 +10,7 @@
 <body>
 <header><div class="wrap"><h1>智慧刷卡提醒</h1><p>學校出勤提醒・網頁設定中心</p></div></header>
 <main>
-<div class="notice">目前支援本機設定與手動雲端同步；尚未啟用學校查詢或自動通知。雲端同步前請先匯出備份。</div>
+<div class="notice">目前支援本機設定與備份；尚未啟用學校刷卡查詢或自動通知。請定期匯出備份，以免清除瀏覽器資料後遺失設定。</div>
 <section class="card"><h2>提醒功能</h2><div id="toggles"></div><div class="grid" style="margin-top:14px"><label class="field">再次確認間隔（分鐘）<input id="recheckDelay" type="number" min="1" max="180"></label></div></section>
 <section class="card"><h2>每週時間表</h2><div class="tabs" id="tabs" aria-label="選擇星期"></div><label class="switchrow"><span>當天需要上班</span><input id="dayEnabled" type="checkbox"></label><div class="grid" style="margin-top:16px">
 <label class="field">上班有效刷卡最晚時間<input id="start" type="time"></label>
@@ -42,7 +42,7 @@ const day=(enabled,leave)=>({enabled,start:"07:30",end:"16:45",workReminders:["0
 const defaults=()=>({version:2,enabled:true,morningEnabled:true,eveningEnabled:true,recheckEnabled:false,recheckDelay:10,days:[day(false,""),day(true,"20:40"),day(true,"17:30"),day(true,"17:30"),day(true,"20:40"),day(true,"20:40"),day(false,"")],overrides:{}});
 const clone=x=>JSON.parse(JSON.stringify(x));
 function validDay(d,requireLeave){if(!d||typeof d.enabled!=="boolean"||!timeOK(d.start)||!timeOK(d.end)||!Array.isArray(d.workReminders)||d.workReminders.length>6||!d.workReminders.every(timeOK)||!(d.leave===""||timeOK(d.leave))||!Number.isInteger(d.advance)||d.advance<0||d.advance>180||(requireLeave&&!timeOK(d.leave)))throw Error("時間表格式不正確");}
-function dateOK(s){if(typeof s!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;const d=new Date(s+"T12:00:00+08:00");return !isNaN(d.getTime())&&d.toISOString().slice(0,10)===s;}
+function dateOK(s){if(typeof s!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;const [y,m,d]=s.split("-").map(Number);const date=new Date(Date.UTC(y,m-1,d));return date.getUTCFullYear()===y&&date.getUTCMonth()===m-1&&date.getUTCDate()===d;}
 function validate(s){if(!s||!Array.isArray(s.days)||s.days.length!==7||!s.overrides||typeof s.overrides!=="object"||Array.isArray(s.overrides))throw Error("設定資料格式錯誤");for(const k of ["enabled","morningEnabled","eveningEnabled","recheckEnabled"])if(typeof s[k]!=="boolean")throw Error("提醒開關資料錯誤");if(!Number.isInteger(s.recheckDelay)||s.recheckDelay<1||s.recheckDelay>180)throw Error("再次確認間隔錯誤");s.days.forEach(d=>validDay(d,false));for(const [date,o] of Object.entries(s.overrides)){if(!dateOK(date)||!o||!["off","work"].includes(o.mode)||typeof o.note!=="string"||o.note.length>120)throw Error("特殊日期格式錯誤："+date);if(o.mode==="work")validDay(o.day,true);}return s;}
 let state,selected=1,dirty=false;
 try{const raw=localStorage.getItem(KEY);state=raw?validate(JSON.parse(raw)):defaults();}catch(e){state=defaults();alert("原設定無法讀取，暫時顯示預設值。未覆蓋原本資料，請先匯出或檢查瀏覽器儲存空間。\n"+e.message);}

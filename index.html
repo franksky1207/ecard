@@ -47,7 +47,7 @@ try{const raw=localStorage.getItem(KEY);state=raw?validate(JSON.parse(raw)):defa
 function message(s,bad){$("status").textContent=s;$("status").style.color=bad?"#b42318":"#205b32";}
 function mark(){dirty=true;message("有尚未儲存的修改");}
 function integer(id,min,max){const s=$(id).value.trim();if(!/^\d+$/.test(s)||Number(s)<min||Number(s)>max)throw Error("分鐘數須介於 "+min+"～"+max);return Number(s);}
-function readDay(prefix,enabled,base){const d=legacyDay({enabled,start:$(prefix+"Start").value,end:$(prefix+"End").value},base);validDay(d);return d;}
+function readDay(prefix,enabled,base){const d=legacyDay({enabled,start:$(prefix?prefix+"Start":"start").value,end:$(prefix?prefix+"End":"end").value},base);validDay(d);return d;}
 function readCurrent(){state.days[selected]=readDay("",$("dayEnabled").checked,state.days[selected]);}
 function renderTabs(){$("tabs").replaceChildren();names.forEach((name,i)=>{const b=document.createElement("button");b.type="button";b.className="tab"+(i===selected?" active":"");b.textContent=name;b.setAttribute("aria-label","星期"+name);b.onclick=()=>{try{readCurrent();selected=i;renderDay();}catch(e){alert(e.message);}};$("tabs").appendChild(b);});}
 function renderDay(){const d=state.days[selected];$("dayEnabled").checked=d.enabled;$("start").value=d.start;$("end").value=d.end;renderTabs();}

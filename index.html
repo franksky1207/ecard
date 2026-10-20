@@ -11,7 +11,7 @@
 <header><div class="wrap"><h1>智慧刷卡提醒</h1><p>學校出勤提醒・網頁設定中心</p></div></header>
 <main>
 <div class="notice">設定只會儲存在目前瀏覽器；修改後請先儲存，再複製到 iPhone 的 Scriptable 匯入。建議另外下載備份，以免清除瀏覽器資料後遺失設定。</div>
-<section class="card"><h2>提醒功能</h2><div id="toggles"></div><div class="grid" style="margin-top:14px"><label class="field">再次確認間隔（分鐘）<input id="recheckDelay" type="number" min="1" max="180"></label><label class="field">最長提醒時間（分鐘）<input id="recheckMaxMinutes" type="number" min="30" max="360" step="1"></label></div></section>
+<section class="card"><h2>提醒功能</h2><div id="toggles"></div><div class="grid" style="margin-top:14px"><label class="field">再次確認間隔（分鐘）<input id="recheckDelay" type="number" min="1" max="180"></label><label class="field">最長提醒時間（分鐘）<input id="recheckMaxMinutes" type="number" min="30" max="360" step="1"><small style="color:var(--muted,#64748b);line-height:1.5">可設定 30～360 分鐘（最長 6 小時），從第一次刷卡提醒發出時起算；查到有效刷卡就提前停止。</small></label></div></section>
 <section class="card"><h2>每週時間表</h2><div class="tabs" id="tabs" aria-label="選擇星期"></div><label class="switchrow"><span>當天需要上班</span><input id="dayEnabled" type="checkbox"></label><div class="grid" style="margin-top:16px">
 <label class="field">上班有效刷卡最晚時間<input id="start" type="time"></label>
 <label class="field">下班有效刷卡最早時間<input id="end" type="time"></label>
